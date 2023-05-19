@@ -1,0 +1,70 @@
+from manipulate_data_class import Data
+from card_generator_class import Cards
+import pandas as pd
+import random
+import streamlit as st
+
+
+col1, col2 = st.columns([1, 3])
+col1.image(image="Transparent_logo_white.png", width=150)
+col2.title("Cards Against GoldCoast Politics")
+
+st.button(label="TAP ME FOR A SHUFFLE")
+
+FILEPATH = "gtp_samples.json"
+
+
+read_cards = Data(attribute="r", filepath=FILEPATH)
+card_text = read_cards.read_json()
+df = pd.DataFrame(card_text)
+
+packs = df.pack.unique()
+card_pack = packs[random.randint(0, len(packs) - 1)]
+rand_pack_black = df.loc[(df["pack"] == card_pack) & (df["color"] == "black")]
+rand_pack_white = df.loc[(df["pack"] == card_pack) & (df["color"] == "white")]
+
+# Black Card
+black_card = rand_pack_black.sample()
+black_card_message = str(black_card["text"].squeeze())
+black_card_pack = str(black_card["pack"].squeeze())
+black_card_color = str(black_card["color"].squeeze())
+
+
+# generate card image
+blackCard = Cards()
+whiteCard = Cards()
+
+# 1 Random Black Card
+black_img = blackCard.generate(
+    message=black_card_message, color=black_card_color, pack=black_card_pack
+)
+black_img.save(f"{black_card_color}.png")
+
+# 7 Random White Cards
+for card in range(0, 5):
+    white_card = rand_pack_white.sample()
+    white_card_message = str(white_card["text"].squeeze())
+    white_card_pack = str(white_card["pack"].squeeze())
+    white_card_color = str(white_card["color"].squeeze())
+    white_img = whiteCard.generate(
+        message=white_card_message, color=white_card_color, pack=white_card_pack
+    )
+    white_img.save(f"{card}_{white_card_color}.png")
+
+st.image("black.png", width=300)
+
+white0, white1 = st.columns(2)
+white0.image("0_white.png", width=300)
+white1.image("1_white.png", width=300)
+
+white2, white3 = st.columns(2)
+white2.image("2_white.png", width=300)
+white3.image("3_white.png", width=300)
+
+st.image("4_white.png", width=300)
+
+st.header(
+    "This is a modification of the original game 'Cards Against Humanity' and is created under the Creative Commons BY-NC-SA 2.0 License. Please visit https://creativecommons.org/licenses/by-nc-sa/2.0/ "
+)
+
+st.write("NoBadDays|TheGoodLife")
