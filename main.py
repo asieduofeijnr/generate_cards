@@ -5,6 +5,7 @@ import random
 import streamlit as st
 import io
 
+st.set_page_config(page_title="GoldCoast CAH", page_icon="Transparent_logo_white.png")
 
 col1, col2 = st.columns([1, 3])
 col1.image(image="Transparent_logo_white.png", width=150)
@@ -45,6 +46,9 @@ black_img_bytes = io.BytesIO()
 black_img.save(black_img_bytes, format="PNG")
 st.image(black_img_bytes.getvalue(), width=300)
 
+st.subheader(
+    "Fill in the blank :top: in the black card with the text from any of the white cards and it will turn the goldcoasts awkward personality into hours of fun."
+)
 # 7 Random White Cards2
 img_bytes = []
 for card in range(0, 5):
@@ -71,8 +75,9 @@ white3.image(img_bytes[3].getvalue(), width=300)
 
 st.image(img_bytes[4].getvalue(), width=300)
 
-st.header(
+st.subheader(
     "This is a modification of the original game 'Cards Against Humanity' and is created under the Creative Commons BY-NC-SA 2.0 License. Please visit https://creativecommons.org/licenses/by-nc-sa/2.0/ "
 )
+st.subheader("Get the original game at https://www.cardsagainsthumanity.com/")
 
 st.write("NoBadDays|TheGoodLife")
