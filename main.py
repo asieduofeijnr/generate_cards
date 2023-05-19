@@ -3,6 +3,7 @@ from card_generator_class import Cards
 import pandas as pd
 import random
 import streamlit as st
+import io
 
 
 col1, col2 = st.columns([1, 3])
@@ -38,9 +39,14 @@ whiteCard = Cards()
 black_img = blackCard.generate(
     message=black_card_message, color=black_card_color, pack=black_card_pack
 )
-black_img.save(f"{black_card_color}.png")
 
-# 7 Random White Cards
+# Convert black card image to bytes
+black_img_bytes = io.BytesIO()
+black_img.save(black_img_bytes, format="PNG")
+st.image(black_img_bytes.getvalue(), width=300)
+
+# 7 Random White Cards2
+img_bytes = []
 for card in range(0, 5):
     white_card = rand_pack_white.sample()
     white_card_message = str(white_card["text"].squeeze())
@@ -49,19 +55,21 @@ for card in range(0, 5):
     white_img = whiteCard.generate(
         message=white_card_message, color=white_card_color, pack=white_card_pack
     )
-    white_img.save(f"{card}_{white_card_color}.png")
+    white_img_bytes = f"{img_bytes}{card}"
+    white_img_bytes = io.BytesIO()
+    img_bytes.append(white_img_bytes)
+    white_img.save(white_img_bytes, format="PNG")
 
-st.image("black.png", width=300)
 
 white0, white1 = st.columns(2)
-white0.image("0_white.png", width=300)
-white1.image("1_white.png", width=300)
+white0.image(img_bytes[0].getvalue(), width=300)
+white1.image(img_bytes[1].getvalue(), width=300)
 
 white2, white3 = st.columns(2)
-white2.image("2_white.png", width=300)
-white3.image("3_white.png", width=300)
+white2.image(img_bytes[2].getvalue(), width=300)
+white3.image(img_bytes[3].getvalue(), width=300)
 
-st.image("4_white.png", width=300)
+st.image(img_bytes[4].getvalue(), width=300)
 
 st.header(
     "This is a modification of the original game 'Cards Against Humanity' and is created under the Creative Commons BY-NC-SA 2.0 License. Please visit https://creativecommons.org/licenses/by-nc-sa/2.0/ "
