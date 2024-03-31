@@ -5,7 +5,8 @@ import random
 import streamlit as st
 import io
 
-st.set_page_config(page_title="GoldCoast CAH", page_icon="Transparent_logo_white.png")
+st.set_page_config(page_title="GoldCoast CAH",
+                   page_icon="Transparent_logo_white.png")
 
 col1, col2 = st.columns([1, 3])
 col1.image(image="Transparent_logo_white.png", width=150)
@@ -49,20 +50,39 @@ st.image(black_img_bytes.getvalue(), width=300)
 st.subheader(
     "Fill in the blank :top: in the black card with the text from any of the white cards and it will turn the goldcoasts awkward personality into hours of fun."
 )
-# 7 Random White Cards2
+# 7 Random White Cards
+
+
+rand_pack_white = rand_pack_white.to_dict('records')
+unique_white_cards = random.sample(rand_pack_white, 5)
+
 img_bytes = []
-for card in range(0, 5):
-    white_card = rand_pack_white.sample()
-    white_card_message = str(white_card["text"].squeeze())
-    white_card_pack = str(white_card["pack"].squeeze())
-    white_card_color = str(white_card["color"].squeeze())
+for card_idx, white_card in enumerate(unique_white_cards):
+    white_card_message = white_card["text"]
+    white_card_pack = white_card["pack"]
+    white_card_color = white_card["color"]
+
     white_img = whiteCard.generate(
         message=white_card_message, color=white_card_color, pack=white_card_pack
     )
-    white_img_bytes = f"{img_bytes}{card}"
+    white_img_bytes = f"{img_bytes}{card_idx}"
     white_img_bytes = io.BytesIO()
     img_bytes.append(white_img_bytes)
     white_img.save(white_img_bytes, format="PNG")
+
+# img_bytes = []
+# for card in range(0, 5):
+#     white_card = rand_pack_white.sample()
+#     white_card_message = str(white_card["text"].squeeze())
+#     white_card_pack = str(white_card["pack"].squeeze())
+#     white_card_color = str(white_card["color"].squeeze())
+#     white_img = whiteCard.generate(
+#         message=white_card_message, color=white_card_color, pack=white_card_pack
+#     )
+#     white_img_bytes = f"{img_bytes}{card}"
+#     white_img_bytes = io.BytesIO()
+#     img_bytes.append(white_img_bytes)
+#     white_img.save(white_img_bytes, format="PNG")
 
 
 white0, white1 = st.columns(2)
@@ -75,9 +95,8 @@ white3.image(img_bytes[3].getvalue(), width=300)
 
 st.image(img_bytes[4].getvalue(), width=300)
 
-st.subheader(
-    "This is a modification of the original game 'Cards Against Humanity' and is created under the Creative Commons BY-NC-SA 2.0 License. Please visit https://creativecommons.org/licenses/by-nc-sa/2.0/ "
-)
-st.subheader("Get the original game at https://www.cardsagainsthumanity.com/")
+st.write(
+    "This is a modification of the original game 'Cards Against Humanity' and is created under the Creative Commons BY-NC-SA 2.0 License. Please visit https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en")
+st.write("Get the original game at https://www.cardsagainsthumanity.com/")
 
 st.write("NoBadDays|TheGoodLife")

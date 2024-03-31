@@ -42,19 +42,23 @@ class Cards:
             (width - border_width, height - border_width),
         ]
         border_draw = ImageDraw.Draw(img)
-        border_draw.rectangle(border_rect, outline=border_color, width=border_width)
+        border_draw.rectangle(
+            border_rect, outline=border_color, width=border_width)
 
         signature_on_card.text(
             signature_position, signature, font=signature_font, fill=text_fill_color
         )
 
         # Wrapped text
-        line_width, line_height = font.getsize("A")
-        wrapped_text = textwrap.wrap(self.message, width=int((600) / line_width))
+        line_width = 40
+        line_height = 80
+        wrapped_text = textwrap.wrap(
+            self.message, width=int((600) / line_width))
         wrapped_text_height = len(wrapped_text) * (line_height)
 
         for line in wrapped_text:
-            text_on_card.text(text_position, line, font=font, fill=text_fill_color)
+            text_on_card.text(text_position, line, font=font,
+                              fill=text_fill_color)
             text_position = (
                 text_position[0],
                 text_position[1] + line_height + 15,
