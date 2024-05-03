@@ -1,5 +1,6 @@
 from manipulate_data_class import Data
 from card_generator_class import Cards
+from classes import *
 import pandas as pd
 import random
 import streamlit as st
@@ -14,12 +15,12 @@ col2.title("Cards Against GoldCoast Politics")
 
 st.button(label="TAP ME FOR A SHUFFLE")
 
-FILEPATH = "gtp_samples.json"
+
+state = is_data_updated("generated_cards.csv", max_file_age_hours=24)
+df = get_data(file_path="generated_cards.csv", state=state)
 
 
-read_cards = Data(attribute="r", filepath=FILEPATH)
-card_text = read_cards.read_json()
-df = pd.DataFrame(card_text)
+client = google_client()
 
 packs = df.pack.unique()
 card_pack = packs[random.randint(0, len(packs) - 1)]
@@ -69,20 +70,6 @@ for card_idx, white_card in enumerate(unique_white_cards):
     white_img_bytes = io.BytesIO()
     img_bytes.append(white_img_bytes)
     white_img.save(white_img_bytes, format="PNG")
-
-# img_bytes = []
-# for card in range(0, 5):
-#     white_card = rand_pack_white.sample()
-#     white_card_message = str(white_card["text"].squeeze())
-#     white_card_pack = str(white_card["pack"].squeeze())
-#     white_card_color = str(white_card["color"].squeeze())
-#     white_img = whiteCard.generate(
-#         message=white_card_message, color=white_card_color, pack=white_card_pack
-#     )
-#     white_img_bytes = f"{img_bytes}{card}"
-#     white_img_bytes = io.BytesIO()
-#     img_bytes.append(white_img_bytes)
-#     white_img.save(white_img_bytes, format="PNG")
 
 
 white0, white1 = st.columns(2)
