@@ -181,7 +181,7 @@ def get_data(file_path, state):
         df = pd.read_csv(cache_file_path)
     else:
         # Data needs to be updated
-        client = bigquery.Client()
+        client = google_client()
         QUERY = (
             "SELECT text,pack,pick,color FROM `akronoma.NewsScraping.Generated_Cards`"
         )
