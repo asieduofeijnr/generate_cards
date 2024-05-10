@@ -1,4 +1,5 @@
 import pandas as pd
+import streamlit as st
 import requests
 import smtplib
 import time
@@ -74,7 +75,8 @@ def chat_gpt_query(prmpt_system, prmpt_user_1, prmpt_assistant, random_black, ra
 
 # Remove api key account
 def google_client():
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'akronomacloudserviceaccount.json'
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = st.secrets['akronomacloudserviceaccount']
+    st.secrets['akronomacloudserviceaccount']
     client = bigquery.Client()
     return client
 
