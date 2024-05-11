@@ -8,7 +8,7 @@ import os
 
 from json.decoder import JSONDecodeError
 from google.cloud import bigquery
-from prompt import *
+from prompt_ import *
 from openai import OpenAI
 
 from email.mime.text import MIMEText
@@ -75,7 +75,7 @@ def chat_gpt_query(prmpt_system, prmpt_user_1, prmpt_assistant, random_black, ra
 
 # Remove api key account
 def google_client():
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = st.secrets['akronomacloudserviceaccount']
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'akronomacloudserviceaccount.json'
     st.secrets['akronomacloudserviceaccount']
     client = bigquery.Client()
     return client
@@ -112,20 +112,21 @@ def merged_cards(df, column):
 def sentences_to_json(card_list, color, category=None):
     json_data = []
     for sentence in card_list:
-        if color == "white":
-            entry = {
-                "text": sentence,
-                "pack": f"Ghana CAH {category}" if category else "Ghana CAH",
-                "color": color
-            }
-        else:
-            entry = {
-                "text": sentence,
-                "pack": f"Ghana CAH {category}" if category else "Ghana CAH",
-                "pick": sentence.count("_"),
-                "color": color
-            }
-        json_data.append(entry)
+        if len(sentence) <= 90:
+            if color == "white":
+                entry = {
+                    "text": sentence,
+                    "pack": f"Ghana CAH {category}" if category else "Ghana CAH",
+                    "color": color
+                }
+            else:
+                entry = {
+                    "text": sentence,
+                    "pack": f"Ghana CAH {category}" if category else "Ghana CAH",
+                    "pick": sentence.count("_"),
+                    "color": color
+                }
+            json_data.append(entry)
     return json_data
 
 
