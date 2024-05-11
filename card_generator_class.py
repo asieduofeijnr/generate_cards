@@ -50,7 +50,7 @@ class Cards:
         )
 
         # Wrapped text
-        line_width = 40
+        line_width = 35
         line_height = 80
         wrapped_text = textwrap.wrap(
             self.message, width=int((600) / line_width))
