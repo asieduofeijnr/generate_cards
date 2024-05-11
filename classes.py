@@ -8,7 +8,7 @@ import os
 
 from json.decoder import JSONDecodeError
 from google.cloud import bigquery
-from prompt_ import *
+from prompt import *
 from openai import OpenAI
 
 from email.mime.text import MIMEText
