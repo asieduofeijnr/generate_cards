@@ -25,7 +25,9 @@ This program generates Cards Against GoldCoast Politics, a modified version of t
 - PIL (Python Imaging Library): For image generation and manipulation.
 - textwrap: For wrapping text in cards.
 - Pandas: For data manipulation and reading CSV files.
+- Openai GPT 3 Turbo: for shot prompting
 - Streamlit: For creating an interactive web interface.
+- 
 
 ## Installation
 
