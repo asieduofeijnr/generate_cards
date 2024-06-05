@@ -33,7 +33,7 @@ This program generates Cards Against GoldCoast Politics, a modified version of t
 
 1. Clone the repository:
    ```shell
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/asieduofeijnr/generate_cards.git
 2. Install the required dependencies:
    ```shell
    pip install -r requirements.txt
